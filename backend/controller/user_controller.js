@@ -4,7 +4,7 @@ import jwt from "jsonwebtoken"
 
 export const createUser = async (req, res) => {
     const {name,email,password} = req.body
-    const [existing] = await db.query("SELECT * FROM users WHERE EMAIL = ? AND PASSWORD = ? ", [email,password])
+    const [existing] = await db.query("SELECT * FROM users WHERE EMAIL = ? ", [email])
 
     if (existing.length > 0) {
         res.status(401).json({ message: "this username already exists"})
@@ -18,14 +18,14 @@ export const createUser = async (req, res) => {
 export const login = async (req,res)=> {
     const {email,password} = req.body
 
-    const [user] = db.query("SELECT * FROM users WHERE email = ? AND password = ?", [email,password])
+    const [user] = await db.query("SELECT * FROM users WHERE email = ? AND password = ?", [email,password])
 
     if (user.length === 0) {
         res.status(401).json({message: "error in the email or password !"})
     }
     else {
         const token = jwt.sign(
-            {id:user.id,email:user.email,password:user.password},
+            {id:user[0].id,email:user[0].email,password:user[0].password},
             process.env.JWT_SECRET,
             {expiresIn: "1d"}
         )

@@ -13,7 +13,7 @@ router.get("/posts/:id", getSinglePost)
 router.post("/users/login", login)
 router.post("/users/signin", createUser)
 
-router.post("/like/post/:post_id", authMiddelware, likedPost)
+router.post("/like/post/:id", authMiddelware, likedPost)
 
 
 
