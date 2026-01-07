@@ -19,21 +19,3 @@ export const getSinglePost = async (req, res) => {
 
     res.status(200).json(rows[0])
 }
-
-export const createUser = async (req, res) => {
-    const {name,email,password} = req.body
-    const [existing] = await db.query("SELECT * FROM users WHERE EMAIL = ? AND PASSWORD = ? ", [email,password])
-
-    if (existing) {
-        res.status(404).json({ message: "this username already exists"})
-    }
-    else {
-        const [rows] = await db.query("INSERT INTO users (name, email, password) VALUES (?, ?, ?)", [name,email,password])
-        res.status(201).json({ message: "username added succesfuly "})
-    }
-}
-
-export const login = async (req,res)=> {
-    const {email,password} = req.body
-    // logic for log in adn using JWT
-}
