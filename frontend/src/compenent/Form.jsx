@@ -11,8 +11,8 @@ const Form = () => {
 
     try {
       const res = await axios.post("http://localhost:8080/api/users/login",userInfo)
-      localStorage.setItem(res.data.token)
-      console.log("logged in stored token is :",res.data.token)
+      localStorage.setItem("token",res.data.token)
+      console.log("logged in , stored token is :",res.data.token)
     }catch(error) {
       console.log(error)
     }

@@ -1,7 +1,7 @@
 import db from "../db/config.js"
 
 export const getAllPosts = async (req,res)=>{
-    const [rows] = await db.query("SELECT * FROM posts")
+    const [rows] = await db.query("SELECT posts.id,posts.title,posts.content,posts.likes_count,users.name AS author FROM posts JOIN users ON posts.user_id = users.id ORDER BY posts.id asc")
     res.status(200).json(rows)
 }
 
