@@ -16,7 +16,6 @@ const Form = () => {
     }catch(error) {
       console.log(error)
     }
-
   }
   return (
     <StyledWrapper>
@@ -99,7 +98,7 @@ const StyledWrapper = styled.div`
   }
 
   .input-group input {
-    width: 100%;
+    width: 90%;
     border-radius: 0.375rem;
     border: 1px solid rgba(55, 65, 81, 1);
     outline: 0;

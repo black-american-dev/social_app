@@ -19,3 +19,16 @@ export const getSinglePost = async (req, res) => {
 
     res.status(200).json(rows[0])
 }
+
+export const createPost = async (req,res) => {
+    const {title,content} = req.body
+    const user_id = req.user.id
+    if (!title) {
+        return res.status(400).json({message: "the title should not be empty !"})
+    }
+    if (!content) {
+        return res.status(400).json({message: "the content should not be empty !"})
+    }
+    const [rows] = await db.query("INSERT INTO posts (user_id,title,content) VALUES (?,?,?)",[user_id,title,content])
+    res.status(201).json({message: "the post has been created successfuly "})
+}
