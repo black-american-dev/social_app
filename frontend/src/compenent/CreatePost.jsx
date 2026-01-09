@@ -1,6 +1,7 @@
 import axios from 'axios';
 import React from 'react';
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 
 const CreatePost = () => {
@@ -8,6 +9,7 @@ const CreatePost = () => {
         title: "",
         content: "",
     })
+    const navigate = useNavigate()
     const handlePost = async (e) => {
         e.preventDefault()
         if(newPost.title === "" || newPost.content === "") {
@@ -30,6 +32,7 @@ const CreatePost = () => {
                 }
             )
             console.log(res.data)
+            navigate("/")
         }catch(error){
             console.log(error)
         }
@@ -60,8 +63,16 @@ const CreatePost = () => {
 }
 
 const StyledWrapper = styled.div`
+    margin: 0;
+    display: flex;
+align-items: center;      /* vertical */
+justify-content: center;  /* horizontal */
+
+    background-color: #242424;
+    min-height: 90vh;
     .form-container {
         width: 320px;
+        height: 100%;
         border-radius: 0.75rem;
         background-color: rgba(17, 24, 39, 1);
         padding: 2rem;

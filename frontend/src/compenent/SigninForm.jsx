@@ -1,21 +1,20 @@
 import {useState} from "react"
 import axios from "axios"
 import styled from 'styled-components';
-import { useNavigate,Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
-const Form = () => {
-  const [userInfo,setUserInfo] = useState({email:"",password:""})
+const SigninForm = () => {
+  const [userInfo,setUserInfo] = useState({name:"",email:"",password:""})
   const navigate = useNavigate()
   const handleLogin = async (e)=>{
     e.preventDefault()
     console.log(userInfo)
-    if (userInfo.email==="" || userInfo.password==="")  {
+    if (userInfo.name==="" || userInfo.email==="" || userInfo.password==="")  {
         alert("all input need to be correct !")
         return
     }
-
     try {
-      const res = await axios.post("http://localhost:8080/api/users/login",userInfo)
+      const res = await axios.post("http://localhost:8080/api/users/signin",userInfo)
       localStorage.setItem("token",res.data.token)
       console.log("logged in , stored token is :",res.data.token)
       navigate("/")
@@ -26,24 +25,27 @@ const Form = () => {
   return (
     <StyledWrapper>
       <div className="form-container">
-        <p className="title">Login</p>
+        <p className="title">Sign in</p>
         <form className="form" methode="POST" onSubmit={handleLogin}>
           <div className="input-group">
-            <label htmlFor="username">Email</label>
-            <input onChange={(e)=> setUserInfo({...userInfo, email:e.target.value})} type="text" name="email" id="username" placeholder />
+            <label htmlFor="username">username</label>
+            <input onChange={(e)=> setUserInfo({...userInfo, name:e.target.value})} type="text" name="name" id="username" placeholder />
+          </div>
+          <div className="input-group">
+            <label htmlFor="email">Email</label>
+            <input onChange={(e)=> setUserInfo({...userInfo, email:e.target.value})} type="text" name="email" id="email" placeholder />
           </div>
           <div className="input-group">
             <label htmlFor="password">Password</label>
             <input onChange={(e)=> setUserInfo({...userInfo ,password:e.target.value})} type="password" name="password" id="password" placeholder />
-            <div className="forgot">
-              <a rel="noopener noreferrer" href="#">Forgot Password ?</a>
-            </div>
+            
           </div>
-          <button className="sign">Log in</button>
+          <br />
+          <button className="sign">Sign in</button>
         </form>
         <div className="social-message">
           <div className="line" />
-          <p className="message">Login with social accounts</p>
+          <p className="message">Sign in with social accounts</p>
           <div className="line" />
         </div>
         <div className="social-icons">
@@ -63,12 +65,7 @@ const Form = () => {
             </svg>
           </button>
         </div>
-        <p className="signup">Don't have an account?
-          <Link to="/signin">
-            <a rel="noopener noreferrer"  className="signup-link">Sign up</a>
-          </Link>
-          
-        </p>
+        
       </div>
     </StyledWrapper>
   );
@@ -204,4 +201,4 @@ justify-content: center;  /* horizontal */
     color: rgba(156, 163, 175, 1);
   }`;
 
-export default Form;
+export default SigninForm;
